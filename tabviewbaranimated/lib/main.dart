@@ -59,6 +59,14 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
       Product('Nanina'),
       Product('dura'),
       Product('mole'),
+      Product('verde'),
+      Product('Nanina'),
+      Product('dura'),
+      Product('mole'),
+      Product('verde'),
+      Product('Nanina'),
+      Product('dura'),
+      Product('mole'),
       Product('verde')
     ]));
     categoria.add(Categoria(name: 'LoLita', product: [
@@ -181,6 +189,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
         controller: scrollController,
         slivers: <Widget>[
           const SliverAppBar(
+            elevation: 0.0,
             floating: true,
             snap: true,
             expandedHeight: 90.0,
