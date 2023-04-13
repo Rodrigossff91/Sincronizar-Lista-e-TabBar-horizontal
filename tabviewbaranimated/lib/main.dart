@@ -51,8 +51,6 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
 
   List<Item> item = List<Item>.empty(growable: true);
 
-  double expand = 90.0;
-
   bool listen = true;
 
   @override
@@ -148,16 +146,6 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
           if (scrollController.offset >= tab.offsetFrom &&
               scrollController.offset <= tab.offsetTo &&
               tab.categoriaSelecetd == false) {
-            if (tabCategory[i] == 0) {
-              setState(() {
-                expand = 90.0;
-              });
-            } else {
-              setState(() {
-                expand = 0.0;
-              });
-            }
-
             onCategorySelected(i, animationRequired: false);
             tabController.animateTo(i);
           }
@@ -189,49 +177,73 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(slivers: <Widget>[
-        SliverAppBar(
-          title: const Text(''),
-          floating: false,
-          snap: false,
-          elevation: 0,
-          expandedHeight: 90.0,
-          flexibleSpace: Padding(
-            padding: const EdgeInsets.only(top: 50),
-            child: Container(
-              color: Colors.transparent,
-              height: 60,
-              child: TabBar(
-                isScrollable: true,
-                onTap: (index) {
-                  onCategorySelected(index);
-                },
-                controller: tabController,
-                tabs: tabCategory
-                    .map((e) => CategoriaS(categoriaTab: e))
-                    .toList(),
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: <Widget>[
+          const SliverAppBar(
+            floating: true,
+            snap: true,
+            expandedHeight: 90.0,
+          ),
+          SliverAppBar(
+            pinned: true,
+            title: const Text(''),
+            floating: false,
+            snap: false,
+            elevation: 0,
+            expandedHeight: 90.0,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                color: Colors.transparent,
+                height: 60,
+                child: TabBar(
+                  isScrollable: true,
+                  onTap: (index) {
+                    onCategorySelected(index);
+                  },
+                  controller: tabController,
+                  tabs: tabCategory
+                      .map((e) => CategoriaS(categoriaTab: e))
+                      .toList(),
+                ),
               ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 60 - kToolbarHeight,
-            child: ListView.builder(
-                controller: scrollController,
-                itemCount: item.length,
-                itemBuilder: (((context, index) {
-                  return item[index].isCategorie
-                      ? CategoriaStyle(
-                          category: item[index],
-                        )
-                      : ProdutoStyle(
-                          product: item[index],
-                        );
-                }))),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return item[index].isCategorie
+                    ? CategoriaStyle(
+                        category: item[index],
+                      )
+                    : ProdutoStyle(
+                        product: item[index],
+                      );
+              },
+              childCount: item.length,
+            ),
           ),
-        )
-      ]),
+        ],
+      ),
+      //SliverToBoxAdapter(
+      //   child: SizedBox(
+      //     height: MediaQuery.of(context).size.height - 60 - kToolbarHeight,
+      //     child: ListView.builder(
+      //         controller: scrollController,
+      //         itemCount: item.length,
+      //         itemBuilder: (((context, index) {
+      //           return item[index].isCategorie
+      //               ? CategoriaStyle(
+      //                   category: item[index],
+      //                 )
+      //               : ProdutoStyle(
+      //                   product: item[index],
+      //                 );
+      //         }))),
+      //   ),
+      // )
+      // )
     );
 
     //  Scaffold(
