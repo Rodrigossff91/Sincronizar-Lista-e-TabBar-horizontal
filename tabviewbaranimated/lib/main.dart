@@ -118,7 +118,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
         }
 
         if (i < categoria.length - 1) {
-          offsetTo =
+          offsetTo +=
               offsetFrom + categoria[i + 1].product.length * productHeight;
         } else {
           offsetTo = double.infinity;
