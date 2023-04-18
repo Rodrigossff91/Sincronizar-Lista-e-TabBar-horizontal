@@ -108,7 +108,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
 
   init() {
     setState(() {
-      double offsetFrom = 0.0;
+      double offsetFrom = 279.3412987347096;
       double offsetTo = 0.0;
       for (var i = 0; i < categoria.length; i++) {
         final Categoria categoriaAtual = categoria[i];
@@ -168,7 +168,9 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
       category.categoriaSelecetd =
           category.caterogia.name == selectedCategory.caterogia.name;
     }
-
+    if (index == 0) {
+      selectedCategory.offsetFrom -= 279.3412987347096;
+    }
     if (animationRequired) {
       setState(() {
         listen = false;
